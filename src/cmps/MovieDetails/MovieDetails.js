@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { NavLink } from "react-router-dom"
 import './movieDetails.css'
 import movieService from '../../services/movieService'
 import YoutubePlayer from '../YoutubePlayer/YoutubePlayer'
@@ -15,18 +16,25 @@ class MovieDetails extends Component {
   }
 
   render() {
-    const { movie, playTrailer, videoId } = this.state
+    const { movie, videoId } = this.state
     return (
-      <div className="movie-details">
+      <div className="movie">
         {movie && videoId &&
           <div className="movie-container" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})` }}>
             <div className="movie-header">
               <h1>{movie.title}</h1>
-              <div>IMDB rate : <span className="rate">{movie.vote_average}</span></div>
-              {/* <button @click=""></button> */}
+              <div>
+                <NavLink className="btn-back" to="/">Go Back</NavLink>
+                IMDB rate :
+                <span className="rate">{movie.vote_average}
+                </span>
+              </div>
             </div>
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="" />
-            <YoutubePlayer videoId={videoId} />
+            <div className="movie-details">
+              <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="" />
+              <p className="desc">{movie.overview}</p>
+            </div>
+              <YoutubePlayer videoId={videoId} />
           </div>
         }
       </div>
@@ -49,14 +57,9 @@ class MovieDetails extends Component {
 
   async componentDidMount() {
     const id = this.props.match.params.id
-    var movie = await movieService.getMovieById(id)
-    var videoId = movie.videos.results[0].key
+    const movie = await movieService.getMovieById(id)
+    const videoId = movie.videos.results[0].key
     this.setState({ movie, videoId })
-  }
-
-  async openTrailer(movie) {
-
-
   }
 
 }

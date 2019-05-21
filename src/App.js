@@ -4,8 +4,8 @@ import { HashRouter as Router, Route, NavLink, Switch, Redirect } from "react-ro
 import MovieList from './cmps/MovieLIst/MovieList';
 import MovieDetails from './cmps/MovieDetails//MovieDetails';
 import NavBar from './cmps/NavBar/NavBar';
-
-
+import './cmps/wecCmp/A11yBar.js'
+import './cmps/wecCmp/style.css'
 
 class App extends Component {
 
@@ -13,6 +13,7 @@ class App extends Component {
     return (
       <Router>
         <div>
+          <acc-menu></acc-menu>
           <NavBar />
           <Switch>
             <Route path="/" exact component={MovieList} />

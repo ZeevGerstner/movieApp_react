@@ -16,8 +16,10 @@ class MovieList extends Component {
     const { movies } = this.state
     return (
       <div>
-        <input type="text" placeholder="search movie" />
-        <button onClick={this.loadMovies.bind(this)}>search</button>
+        <div className="search">
+          <input type="text" placeholder="search movie" />
+          <button onClick={this.loadMovies.bind(this)}>search</button>
+        </div>
         {/* <button onClick={this.loadMovie.bind(this,2)}>more results</button> */}
         <div className="movie-list">
           {
@@ -25,6 +27,7 @@ class MovieList extends Component {
             movies.map(movie => (
               <Movie
                 movie={movie}
+                key={movie.id}
               />
             ))
           }

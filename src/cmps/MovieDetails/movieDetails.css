@@ -1,8 +1,6 @@
-img {
-}
 
 .movie-container {
-  height: 90vh;
+  height: fit-content;
   width: 90vw;
   margin: 0 auto;
   background-repeat: no-repeat;
@@ -17,6 +15,16 @@ img {
   padding: 0 20px;
   color: whitesmoke;
   background: rgba(0, 0, 0, 0.308);
+  box-shadow: 5px 5px 5px white;
+}
+
+.movie-header div {
+  display: flex;
+  flex-direction: column;
+}
+
+span {
+  text-align: center;
 }
 
 .rate {
@@ -24,8 +32,30 @@ img {
   color: gold;
 }
 
-iframe {
-  position: absolute;
-  bottom: 0;
+.btn-back {
+  background: wheat;
+  color: black;
+  font-size: 0.5em;
+  align-self: flex-end;
+  margin-bottom: 2px; 
 }
 
+iframe {
+  position: absolute;
+  bottom: 5vh;
+  left: 42vw;
+}
+
+.movie-details {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.199);
+  position: relative;
+}
+
+.desc {
+  margin: 10px auto;
+  width: 50%;
+  color: whitesmoke;
+  font-size: 1.2em;
+  text-shadow: 2px 5px black;
+}
