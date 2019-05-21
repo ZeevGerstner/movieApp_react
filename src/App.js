@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <acc-menu></acc-menu>
+          <a11y-menu></a11y-menu>
           <NavBar />
           <Switch>
             <Route path="/" exact component={MovieList} />
