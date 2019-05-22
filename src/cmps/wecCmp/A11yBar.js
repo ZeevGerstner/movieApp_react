@@ -143,13 +143,15 @@ class a11yMenu extends HTMLElement {
         this._toggleContrast();
         break;
       case 'Keyboard':
-        this._toggleDesaturate();
+        this._toggleKeyboard();
         break;
       case 'Cursor':
         this._toggleCursor();
         break;
       case 'Zoom':
         this._toggleZoom();
+        break;
+      default:
         break;
     }
   }
