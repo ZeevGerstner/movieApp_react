@@ -138,7 +138,7 @@ template.innerHTML = `
       Zoom
     </button>
   </li>
-  <li  class="font">
+  <li class="font">
     <span class="active-stage hide">√</span>
     <button aria-label="font">
       Font
@@ -190,6 +190,9 @@ class a11yMenu extends HTMLElement {
         font: {
           classPrefix: 'a11y-font',
           active: false
+        },
+        keyboard: {
+          active: false
         }
       }
     }
@@ -198,10 +201,11 @@ class a11yMenu extends HTMLElement {
 
   _setStyleFromStorage() {
     for (let key in this.state) {
-      if (key === 'cursor' || key === 'font') {
+      if (key === 'cursor' || key === 'font' || key === 'keyboard') {
         this._checkIsActive(key);
         continue;
       }
+
       let elCount = this.state[key].count;
       if (elCount) {
         document.documentElement.classList.add(`${this.state[key].classPrefix}-${elCount}`);
@@ -240,9 +244,10 @@ class a11yMenu extends HTMLElement {
     this._saveToStorage();
   }
 
-  _toggleKeyboard() {
+  _toggleKeyboard(toggle = true) {
     this.$menu.classList.toggle('a11y-s1');
     this._toggleStageSpan('keyboard');
+    if (toggle) this.state.keyboard.active = !this.state.keyboard.active;
 
     const elTypes = ['A', 'INPUT', 'BUTTON'];
     elTypes
@@ -262,16 +267,16 @@ class a11yMenu extends HTMLElement {
 
   _checkIsActive(type) {
     const a11yType = this.state[type];
+    if (type === 'keyboard' && a11yType.active) return this._toggleKeyboard(false);
     if (a11yType.active) {
-      document.documentElement.classList.add(a11yType.classPrefix);
       this._shadowRoot.querySelector(`.${type} span`).classList.remove('hide');
+      document.documentElement.classList.add(a11yType.classPrefix);
     }
   }
 
   _toggleStyleByType(type) {
     const a11yType = this.state[type];
     const prefix = a11yType.classPrefix;
-
     const elClassList = document.documentElement.classList;
 
     elClassList.remove(`${prefix}-${a11yType.count}`);
