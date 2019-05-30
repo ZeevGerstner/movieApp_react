@@ -36,7 +36,11 @@ template.innerHTML = `
     margin: unset;
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    grid-template-rows: repeat(3,100px);
+    grid-template-rows: repeat(4,100px) 50px;
+  }
+
+  .a11y-menu li:last-child {
+    grid-column: 1/span 2;
   }
 
   .a11y-menu:after {
@@ -144,9 +148,25 @@ template.innerHTML = `
       Font
     </button>
   </li>
+  <li class="links">
+    <span class="active-stage hide">√</span>
+    <button aria-label="links">
+      Highlight links
+    </button>
+  </li>
+  <li class="dark">
+    <span class="active-stage hide">√</span>
+    <button aria-label="dark" disabled>
+      Dark
+    </button>
+  </li>
+  <li class="reset">
+    <button aria-label="reset">
+      Reset
+    </button>
+  </li>
 </ul>
 `
-
 class a11yMenu extends HTMLElement {
 
   constructor() {
@@ -188,7 +208,11 @@ class a11yMenu extends HTMLElement {
           active: false
         },
         font: {
-          classPrefix: 'a11y-font',
+          classPrefix: 'a11y-s7',
+          active: false
+        },
+        links: {
+          classPrefix: 'a11y-s6',
           active: false
         },
         keyboard: {
@@ -201,7 +225,7 @@ class a11yMenu extends HTMLElement {
 
   _setStyleFromStorage() {
     for (let key in this.state) {
-      if (key === 'cursor' || key === 'font' || key === 'keyboard') {
+      if (key === 'cursor' || key === 'font' || key === 'keyboard' || key === 'links') {
         this._checkIsActive(key);
         continue;
       }
@@ -233,10 +257,12 @@ class a11yMenu extends HTMLElement {
         this._toggleKeyboard();
         break;
       case 'cursor':
-        this._toggleOnceOnly('cursor')
-        break;
       case 'font':
-        this._toggleOnceOnly('font')
+      case 'links':
+        this._toggleOnceOnly(type)
+        break;
+      case 'reset':
+        this._resetAll()
         break;
       default:
         break;
@@ -302,6 +328,30 @@ class a11yMenu extends HTMLElement {
     this._shadowRoot.querySelector(`.${type} span`).classList.toggle('hide');
   }
 
+  _resetAll() {
+    this._resetState()
+    this._resetClasses()
+    this._hideSpan()
+  }
+
+  _resetState() {
+    for (let key in this.state) {
+      this.state[key].active = false;
+      if (this.state[key].count) this.state[key].count = 0;
+    }
+  }
+
+  _resetClasses() {
+    const classes = [...document.documentElement.classList]
+      .filter(className => className.match(/^a11y-.+/))
+    document.documentElement.classList.remove(...classes);
+  }
+
+  _hideSpan() {
+    this._shadowRoot.querySelectorAll(`span`)
+      .forEach(el => el.classList.add('hide'));
+  }
+
   _saveToStorage() {
     localStorage['a11y'] = JSON.stringify(this.state);
   }
@@ -309,3 +359,4 @@ class a11yMenu extends HTMLElement {
 }
 
 window.customElements.define('a11y-menu', a11yMenu);
+
