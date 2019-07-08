@@ -1,4 +1,4 @@
-'use strict'
+// 'use strict'
 console.log('in a11y');
 
 const template = document.createElement('template');
@@ -151,7 +151,8 @@ template.innerHTML = `
   <li class="links">
     <span class="active-stage hide">√</span>
     <button aria-label="links">
-      Highlight links
+      Highlight <br>
+      links
     </button>
   </li>
   <li class="dark">

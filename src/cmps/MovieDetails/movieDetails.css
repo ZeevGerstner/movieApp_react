@@ -43,7 +43,8 @@ span {
 iframe {
   position: absolute;
   bottom: 5vh;
-  left: 42vw;
+  left: 43vw;
+  max-width: 45vw;
 }
 
 .movie-details {
@@ -57,5 +58,28 @@ iframe {
   width: 50%;
   color: whitesmoke;
   font-size: 1.2em;
-  text-shadow: 2px 5px black;
+  /* text-shadow: 2px 5px black; */
+}
+
+
+@media (max-width: 760px) {
+  .movie-details {
+    flex-direction: column;
+  }
+
+  .movie-details img {
+    display: none;
+  }
+  
+  .desc {
+    margin: 10px;
+    width: inherit;
+  }
+
+  iframe {
+    position: unset;
+    width: 100%;
+    max-width: unset;
+    margin-top: 10px;
+  }
 }

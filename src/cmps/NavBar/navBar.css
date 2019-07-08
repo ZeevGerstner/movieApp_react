@@ -1,0 +1,16 @@
+.nav-bar {
+  height: 70px;
+  box-shadow: 5px 3px 5px grey;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-left: 40px;
+}
+
+.nav-bar a {
+  color: black;
+}
+
+.nav-bar a:hover {
+  color: white;
+}
